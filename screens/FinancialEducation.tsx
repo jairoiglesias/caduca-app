@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/core';
-import { useFocusEffect } from '@react-navigation/native';
 import React, {useState, useEffect} from 'react';
 import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { View } from '../components/Themed';
@@ -8,16 +7,16 @@ import axios from 'axios'
 
 const DEFAULT_COLOR = 'rgb(250, 190, 52)'
 
-const TabTwoScreen = () => {
+const FinancialEducation = () => {
 
   const navigation = useNavigation()
   const [listItems, setListItems] = useState([])
 
   const fetchList = async() => {
-    const url = 'https://caduca.herokuapp.com/caduca/dividas-pagas'
+    const url = 'https://caduca.herokuapp.com/caduca/educacao-financeira-list'
     const response = await axios.get(url)
     setListItems(response.data)
-    console.log(response.data)
+    console.log(response.data.links)
   }
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const TabTwoScreen = () => {
           <Text>Data: {item.data}</Text>
           <Text>Empresa: {item.empresaDivida}</Text>
           <Text>Recuperador: {item.recuperadora}</Text>
-          <View style={{
+          {/* <View style={{
             flexDirection: 'row',
             marginVertical: 10,
             padding: 5,
@@ -57,10 +56,10 @@ const TabTwoScreen = () => {
               fontWeight: 'bold',
             }}>Valor Pago: R$ {item.valorPago}</Text>
             
-          </View>
+          </View> */}
         </View>
         
-        <View>
+        {/* <View>
           <Text style={{
             position: 'absolute', 
             fontSize: 20, 
@@ -79,7 +78,7 @@ const TabTwoScreen = () => {
               top: 25
             }}
           />
-        </View>
+        </View> */}
         
       </TouchableOpacity>
     )
@@ -90,7 +89,7 @@ const TabTwoScreen = () => {
       <Text style={styles.title}>Lista de dividas pagas</Text>
       
       <FlatList
-        data={listItems.dividasPagas}
+        data={listItems.links}
         renderItem={renderItem}
         style={styles.flatlist}
       />
@@ -121,4 +120,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TabTwoScreen
+export default FinancialEducation

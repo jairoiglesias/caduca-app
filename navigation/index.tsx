@@ -1,21 +1,26 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome, MaterialIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as React from 'react';
+import React from 'react';
+import { Image } from 'react-native';
 import { ColorSchemeName, Pressable } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
+
+import CpfScreen from '../screens/CpfScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
+import OfferScreen from '../screens/OfferScreen';
+import PreviewDebtScreen from '../screens/PreviewDebtScreen';
+import LookiaScreen from '../screens/LookiaScreen';
+import FinancialEducation from '../screens/FinancialEducation';
+
+import LogoCaduca from '../assets/logo-caduca.png'
+
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -29,16 +34,17 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
   );
 }
 
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
- */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   return (
     <Stack.Navigator>
+      <Stack.Screen name="Cpf" component={CpfScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="PreviewDebtScreen" component={PreviewDebtScreen} options={{ headerShown: false }} />
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="OfferScreen" component={OfferScreen} options={{ title: 'Oferta' }} />
+      <Stack.Screen name="LookiaScreen" component={LookiaScreen} options={{ title: 'Analise Lookia' }} />
+      
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
@@ -47,10 +53,6 @@ function RootNavigator() {
   );
 }
 
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
@@ -58,39 +60,117 @@ function BottomTabNavigator() {
 
   return (
     <BottomTab.Navigator
-      initialRouteName="TabOne"
+      initialRouteName="Caducadas"
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="TabOne"
+        name="Caducadas"
         component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+        options={({ navigation }) => ({
+          title: 'Caducadas',
+          tabBarIcon: ({ color }) => <MaterialIcons
+            name="directions-run"
+            size={25}
+            color={'black'}
+          />,
+          headerLeft: () => (
+            <Image 
+              source={LogoCaduca} 
+              style={{
+                width: 30,
+                height: 30,
+                marginLeft: 10
+              }}/>
+          ),
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}>
-              <FontAwesome
-                name="info-circle"
+              <MaterialIcons
+                name="directions-run"
                 size={25}
-                color={Colors[colorScheme].text}
+                color={'black'}
                 style={{ marginRight: 15 }}
               />
+              
             </Pressable>
           ),
         })}
       />
       <BottomTab.Screen
-        name="TabTwo"
+        name="Pagos"
         component={TabTwoScreen}
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
+        options={({ navigation }) => ({
+          title: 'Pagos',
+          tabBarIcon: ({ color }) => <MaterialIcons
+            name="payments"
+            size={25}
+            color={'black'}
+          />,
+          headerLeft: () => (
+            <Image 
+              source={LogoCaduca} 
+              style={{
+                width: 30,
+                height: 30,
+                marginLeft: 10
+              }}/>
+          ),
+          headerRight: () => (
+            <Pressable
+              onPress={() => navigation.navigate('Modal')}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}>
+              <MaterialIcons
+                name="payments"
+                size={25}
+                color={'black'}
+                style={{ marginRight: 15 }}
+              />
+              {/* <MaterialIcons name="payments" size={24} color="black" /> */}
+            </Pressable>
+          ),
+        })}
+      />
+      <BottomTab.Screen
+        name="EducacaoFinanceira"
+        component={FinancialEducation}
+        options={({ navigation }) => ({
+          title: 'Educação Financeira',
+          tabBarIcon: ({ color }) => <MaterialIcons
+            name="cast-for-education"
+            size={25}
+            color={'black'}
+          />,
+          headerLeft: () => (
+            <Image 
+              source={LogoCaduca} 
+              style={{
+                width: 30,
+                height: 30,
+                marginLeft: 10
+              }}/>
+          ),
+          headerRight: () => (
+            <Pressable
+              onPress={() => navigation.navigate('Modal')}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}>
+              <MaterialIcons
+                name="cast-for-education"
+                size={25}
+                color={'black'}
+                style={{ marginRight: 15 }}
+              />
+              {/* <MaterialIcons name="payments" size={24} color="black" /> */}
+            </Pressable>
+          ),
+        })}
       />
     </BottomTab.Navigator>
   );
