@@ -45,14 +45,14 @@ const TabTwoScreen = () => {
           }}>
             <Text style={{
               color: 'white', 
-              fontSize: 12, 
+              fontSize: 10, 
               marginHorizontal: 5,
               fontWeight: 'bold'
             }}>Data Pagamento: {item.dataPagamento}</Text>
             
             <Text style={{
               color: 'white', 
-              fontSize: 12, 
+              fontSize: 10, 
               marginHorizontal: 5,
               fontWeight: 'bold',
             }}>Valor Pago: R$ {item.valorPago}</Text>

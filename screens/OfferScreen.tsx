@@ -10,6 +10,7 @@ import axios from "axios";
 import Text from "../components/Text";
 
 const DEFAULT_COLOR = "rgb(250, 190, 52)";
+const DEFAULT_COLOR_V2 = "rgb(243, 210, 132)";
 
 const OfferScreen = () => {
 
@@ -48,7 +49,7 @@ const OfferScreen = () => {
     
         return (
           <TouchableOpacity style={styles.cardContainer} onPress={() => handleItem(item)}>
-            <View style={{flexDirection: 'row', width: '100%'}}>
+            <View style={{flexDirection: 'row', width: '100%', padding: 5}}>
                 <View style={styles.cardItem}>
                     <Text style={{textAlign: 'center', height: 40}}>Quantidade Parcela</Text>
                     <Text style={{fontWeight: 'bold'}}>{item.quantidadeParcela}</Text>
@@ -62,13 +63,16 @@ const OfferScreen = () => {
                     <Text style={{fontWeight: 'bold'}}>{item.valorParcela}</Text>
                 </View>
             </View>
+            <View style={{width: '100%', backgroundColor: DEFAULT_COLOR_V2}}>
+                <Text style={{textAlign: 'center', padding: 5}}>Iniciar Negociação</Text>    
+            </View>
           </TouchableOpacity>
         )
       }
 
 	return (
 		<View style={styles.container}>
-            <View style={{alignSelf: 'flex-start', margin: 20}}>
+            <View style={{flexDirection: 'row', margin: 10, justifyContent: 'space-between', width: '100%'}}>
                 <View style={styles.item}>
                     <Text>Data</Text>
                     <Text>{offerData.data}</Text>
@@ -78,7 +82,8 @@ const OfferScreen = () => {
                     <Text>Empresa</Text>
                     <Text>{offerData.empresaDivida}</Text>
                 </View>
-
+            </View>
+            <View style={{flexDirection: 'row', margin: 10, justifyContent: 'space-between', width: '100%'}}>
                 <View style={styles.item}>
                     <Text>Recuperadora</Text>
                     <Text>{offerData.recuperadora}</Text>
@@ -89,6 +94,7 @@ const OfferScreen = () => {
                 </View>
             </View>
 
+            <View style={{borderBottomWidth: 1, width: '90%', margin: 20}}/>
             <Text style={{fontSize: 15}}>Propostas</Text>
             <FlatList
                 renderItem={renderItem}
@@ -114,10 +120,12 @@ const styles = StyleSheet.create({
 		flex: 1,
 		alignItems: "center",
 		justifyContent: "center",
-        marginBottom: 20
+        marginBottom: 20,
 	},
     item: {
         marginVertical: 5,
+        marginHorizontal: 20,
+        width: 100
     },
 	input: {
 		padding: 10,
@@ -152,10 +160,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: "90%",
         alignSelf: 'center',
-        padding: 10,
+        // padding: 10,
         margin: 5,
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+        // flexDirection: 'row',
+        // justifyContent: 'space-between'
     },
     cardItem: {
         alignItems: 'center',

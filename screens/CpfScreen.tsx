@@ -41,7 +41,7 @@ const CpfScreen = () => {
 					onChangeText={setCpf}
 				/>
 
-				<Button title={"Enviar"} onPress={handleNext} />
+				<Button title={"Continuar"} onPress={handleNext} />
 			</Animatable.View>
 			
 		</View>

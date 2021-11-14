@@ -4,6 +4,7 @@ import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { View } from '../components/Themed';
 import Text from '../components/Text'
 import axios from 'axios'
+import { Video, AVPlaybackStatus } from 'expo-av';
 
 const DEFAULT_COLOR = 'rgb(250, 190, 52)'
 
@@ -30,57 +31,25 @@ const FinancialEducation = () => {
   const renderItem = ({item}) => {
     
     return (
-      <TouchableOpacity style={styles.cardContainer} onPress={() => handleItem(item)}>
-        <View>
-          <Text>Data: {item.data}</Text>
-          <Text>Empresa: {item.empresaDivida}</Text>
-          <Text>Recuperador: {item.recuperadora}</Text>
-          {/* <View style={{
-            flexDirection: 'row',
-            marginVertical: 10,
-            padding: 5,
-            borderRadius: 5,
-            backgroundColor: '#edcc80'
-          }}>
-            <Text style={{
-              color: 'white', 
-              fontSize: 12, 
-              marginHorizontal: 5,
-              fontWeight: 'bold'
-            }}>Data Pagamento: {item.dataPagamento}</Text>
-            
-            <Text style={{
-              color: 'white', 
-              fontSize: 12, 
-              marginHorizontal: 5,
-              fontWeight: 'bold',
-            }}>Valor Pago: R$ {item.valorPago}</Text>
-            
-          </View> */}
-        </View>
+      <View style={styles.cardContainer} onPress={() => handleItem(item)}>
         
-        {/* <View>
-          <Text style={{
-            position: 'absolute', 
-            fontSize: 20, 
-            fontWeight: 'bold',
-            right: 15,
-            top: 10
-            }}>R$ {item.valorDivida}</Text>
-
-          <View 
-            style={{
-              borderBottomColor: 'black',
-              borderBottomWidth: 1,
-              width: 120,
-              position: 'absolute',
-              right: 15,
-              top: 25
-            }}
-          />
-        </View> */}
+        <Text>Pontuacao: {item.pontuacao}</Text>
+        <Video
+          // ref={video}
+          style={{
+            width: 150,
+            height: 100,
+          }}
+          source={{
+            uri: item.url,
+          }}
+          useNativeControls
+          // resizeMode="contain"
+          // isLooping
+          // onPlaybackStatusUpdate={status => setStatus(() => status)}
+        />
         
-      </TouchableOpacity>
+      </View>
     )
   }
 
@@ -93,6 +62,20 @@ const FinancialEducation = () => {
         renderItem={renderItem}
         style={styles.flatlist}
       />
+
+        {/* <Video
+            // ref={video}
+            style={{
+              width: 150,
+              height: 150,
+            }}
+            source={{
+              uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+            }}
+            useNativeControls
+            resizeMode="contain"
+            isLooping
+          /> */}
       
     </View>
   );
