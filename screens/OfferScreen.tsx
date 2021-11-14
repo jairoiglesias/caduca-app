@@ -58,7 +58,6 @@ const OfferScreen = () => {
         navigation.navigate('LookiaScreen')
     }
 
-
     const CardParcela = ({item}) => {
         return (
             <TouchableOpacity style={styles.cardContainer} onPress={() => handleItem(item)}>
