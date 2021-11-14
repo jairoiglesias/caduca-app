@@ -1,10 +1,11 @@
 import { useNavigation } from '@react-navigation/core';
 import React, {useState, useEffect} from 'react';
-import { FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { FlatList, Linking, StyleSheet, TouchableOpacity } from 'react-native';
 import { View } from '../components/Themed';
 import Text from '../components/Text'
 import axios from 'axios'
 import { Video, AVPlaybackStatus } from 'expo-av';
+import { Entypo } from '@expo/vector-icons';
 
 const DEFAULT_COLOR = 'rgb(250, 190, 52)'
 
@@ -33,21 +34,15 @@ const FinancialEducation = () => {
     return (
       <View style={styles.cardContainer} onPress={() => handleItem(item)}>
         
+        <View>
+          <Entypo name="folder-video" size={50} color="black" />
         <Text>Pontuacao: {item.pontuacao}</Text>
-        <Video
-          // ref={video}
-          style={{
-            width: 150,
-            height: 100,
-          }}
-          source={{
-            uri: item.url,
-          }}
-          useNativeControls
-          // resizeMode="contain"
-          // isLooping
-          // onPlaybackStatusUpdate={status => setStatus(() => status)}
-        />
+          <TouchableOpacity style={{marginVertical: 10}} onPress={() => {
+            Linking.openURL(item.url)
+          }}>
+            <Text>{item.url}</Text>
+          </TouchableOpacity>
+        </View>
         
       </View>
     )
