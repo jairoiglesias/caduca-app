@@ -50,7 +50,6 @@ const FinancialEducation = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Lista de dividas pagas</Text>
       
       <FlatList
         data={listItems.links}

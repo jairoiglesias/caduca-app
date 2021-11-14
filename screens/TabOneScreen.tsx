@@ -43,7 +43,7 @@ const TabOneScreen = () => {
           justifyContent: 'space-around'
         }}
       >
-        <Text style={{fontSize: 40}}>Score</Text>
+        <Text style={{fontSize: 30}}>Pontuação</Text>
         <AnimatedCircularProgress
           size={120}
           width={15}

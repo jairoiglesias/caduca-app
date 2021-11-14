@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { StyleSheet, TextInput } from "react-native";
 
 import { Text, View } from "../components/Themed";
@@ -7,6 +7,8 @@ import Button from "../components/Button";
 import * as Animatable from "react-native-animatable";
 import { useNavigation, useRoute } from "@react-navigation/core";
 import CustomCheckBox from "../components/CheckBox";
+
+import { TextInputMask } from 'react-native-masked-text'
 
 const DEFAULT_COLOR = "rgb(250, 190, 52)";
 
@@ -18,6 +20,8 @@ const PreviewDebtScreen = () => {
 	const [debtData, setDebtData] = React.useState({
 		debts: 2
 	})
+
+	const [phone, setPhone] = useState('')
 
 	useEffect(() => {
 
@@ -72,12 +76,18 @@ const PreviewDebtScreen = () => {
 					onChangeText={handleInput}
 				/>
 
-				<TextInput
+				<TextInputMask
+					type={'cel-phone'}
+					options={{
+						maskType: 'BRL',
+						withDDD: true,
+						dddMask: '(99) '
+					}}
 					style={styles.input}
 					placeholder={"Telefone"}
-					maxLength={11}
 					keyboardType={"numeric"}
-					onChangeText={handleInput}
+					value={phone}
+					onChangeText={setPhone}
 				/>
 
 				<TextInput

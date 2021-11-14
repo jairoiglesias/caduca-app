@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { FlatList, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import { Alert, FlatList, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 
 import { View } from "../components/Themed";
 import Button from "../components/Button";
@@ -23,8 +23,23 @@ const OfferScreen = () => {
         const id = route.params.id
         const url = `https://caduca.herokuapp.com/caduca/dividas-ativas/${id}`
         const response = await axios.get(url)
-        console.log(response.data.divida)
-        setOfferData(response.data.divida)
+        console.log(response.data)
+
+        const updatedPropostas = [
+            ...response.data.divida.propostas,
+            {
+                "quantidadeParcela": 'A Vista',
+                "if": "Santander",
+                "valorEmprestimo": "200,00",
+            }
+        ]
+
+        const updatedOffer = {
+            ...response.data.divida,
+            propostas: updatedPropostas
+        }
+
+        setOfferData(updatedOffer)
     }
 
     useEffect(() => {
@@ -32,7 +47,7 @@ const OfferScreen = () => {
     }, [])
 
 	const handleNext = () => {
-		// navigation.navigate('Root', {cpf})
+		Alert.alert('Solicitação realizada com sucesso!')
 	}
 
     const handleItem = (item) => {
@@ -43,12 +58,10 @@ const OfferScreen = () => {
         navigation.navigate('LookiaScreen')
     }
 
-    const renderItem = ({item}) => {
 
-        console.log('item', item)
-    
+    const CardParcela = ({item}) => {
         return (
-          <TouchableOpacity style={styles.cardContainer} onPress={() => handleItem(item)}>
+            <TouchableOpacity style={styles.cardContainer} onPress={() => handleItem(item)}>
             <View style={{flexDirection: 'row', width: '100%', padding: 5}}>
                 <View style={styles.cardItem}>
                     <Text style={{textAlign: 'center', height: 40}}>Quantidade Parcela</Text>
@@ -68,6 +81,38 @@ const OfferScreen = () => {
             </View>
           </TouchableOpacity>
         )
+    }
+
+    const CardBanco = ({item}) => {
+        return (
+            <TouchableOpacity style={styles.cardContainer} onPress={() => handleItem(item)}>
+            <View style={{flexDirection: 'row', width: '100%', padding: 5}}>
+                <View style={styles.cardItem}>
+                    <Text style={{textAlign: 'center', height: 40}}>Quantidade Parcela</Text>
+                    <Text style={{fontWeight: 'bold'}}>{item.quantidadeParcela}</Text>
+                </View>
+                <View style={styles.cardItem}>
+                    <Text style={{textAlign: 'center', height: 40}}>Inst. Finan.</Text>
+                    <Text style={{fontWeight: 'bold'}}>{item.if}</Text>
+                </View>
+                <View style={styles.cardItem}>
+                    <Text style={{textAlign: 'center', height: 40}}>Valor Emprestimo</Text>
+                    <Text style={{fontWeight: 'bold'}}>{offerData.valor}</Text>
+                </View>
+            </View>
+            <View style={{width: '100%', backgroundColor: DEFAULT_COLOR_V2}}>
+                <Text style={{textAlign: 'center', padding: 5}}>Iniciar Negociação</Text>    
+            </View>
+          </TouchableOpacity>
+        )
+    }
+
+    const renderItem = ({item}) => {
+
+        console.log('item', item)
+        
+        if(item.recuperadora) return <CardParcela item={item} />
+        if(item.if) return <CardBanco item={item} />
       }
 
 	return (
@@ -160,10 +205,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         width: "90%",
         alignSelf: 'center',
-        // padding: 10,
         margin: 5,
-        // flexDirection: 'row',
-        // justifyContent: 'space-between'
     },
     cardItem: {
         alignItems: 'center',
